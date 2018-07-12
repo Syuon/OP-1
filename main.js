@@ -9,6 +9,7 @@ var counter=0;
 var ccounter=0;
 var scounter=0;
 var gcounter=0;
+var speed=1;
 //-----------------------------------------------------------------------------
 window.onload = function () {
 	//1920x1080
@@ -23,7 +24,7 @@ window.onload = function () {
 	scc.w=screenCanvas.width/2;
 	scc.h=screenCanvas.height/2
 
-	setInterval(function(){ccounter+=0.1;},100);
+	setInterval(function(){ccounter+=speed/10;},100);
 
 	for(i=1;i<=img_max;i++){
 		img.push(i);
@@ -50,12 +51,19 @@ window.onload = function () {
 	img[18].src = "img/18.png";
 	img[19].src = "img/19.png";
 	img[20].src = "img/20.png";
-
+    //-----------------------------------------------------------------------------
+    var audio = new Audio();
+    audio.src = "デフォルトのプロジェクト.mp3";
+    audio.playbackRate = speed;
+    //audio.loop = true;
+    // 再生を開始する
+    audio.play();
 	//-----------------------------------------------------------------------------
 	(function () {
-		counter++;
-		scounter+=(ccounter>=11?1:0);
-		gcounter+=(scounter>=100&&gcounter<=5?.1:0);
+		counter+=speed;
+		scounter+=(ccounter>=11?speed:0);
+		gcounter+=(scounter>=100&&gcounter<=5?speed/10:0);
+    audio.playbackRate = speed;
 
 		ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 		ctx.globalCompositeOoperation = "source-over";
@@ -118,7 +126,7 @@ window.onload = function () {
 				ctx.translate(mp.x+scc.w,mp.y+scc.h);	
 				ctx.rotate(-counter/4 * Math.PI / 180)
 				ctx.translate(-(mp.x+scc.w),-(mp.y+scc.h));
-				ctx.drawImage(img[18],mp.x+scc.w-scc.h-700,mp.y-700,sc.h+1400,sc.h+1400);
+				ctx.drawImage(img[15],mp.x+scc.w-scc.h-600,mp.y-600,sc.h+1200,sc.h+1200);
 				ctx.restore();
 			}
 
@@ -128,8 +136,27 @@ window.onload = function () {
 		}else{
 			ctx.globalAlpha = gcounter/5;
 			ctx.drawImage(img[5], mp.x+0, mp.y+0, screenCanvas.width, screenCanvas.height);
+		};
+		if(ccounter>=32){
+			if(window.confirm("再再生?")){
+				ccounter=0;
+				scounter=0;
+				gcounter=0;
+			}else{
+				ccounter=-100;
+			}
+		};
+		if(ccounter==-100){
+			ctx.fillStyle=="rgba(0,0,0,0)";
+			ctx.fillRect(0,0,screenCanvas.width,screenCanvas.height);
 		}
 		//繰り返し読み込み-------------------------------------------------------------
 		requestAnimationFrame(arguments.callee);
 	})();
 };
+function aspeed(p){
+	speed=p;
+	ccounter=0;
+	scounter=0;
+	gcounter=0;
+}
