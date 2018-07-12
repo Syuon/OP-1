@@ -53,7 +53,7 @@ window.onload = function () {
 	img[20].src = "img/20.png";
     //-----------------------------------------------------------------------------
     var audio = new Audio();
-    audio.src = "デフォルトのプロジェクト.mp3";
+    audio.src = "aaa.mp3";
     audio.playbackRate = speed;
     //audio.loop = true;
     // 再生を開始する
