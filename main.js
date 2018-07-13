@@ -159,4 +159,5 @@ function aspeed(p){
 	ccounter=0;
 	scounter=0;
 	gcounter=0;
+	audio.play();
 }
